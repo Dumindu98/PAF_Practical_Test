@@ -14,51 +14,56 @@ public class User {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// Provide the correct details: DBServer/DBName, username, password
-			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/paf?useTimezone=true&serverTimezone=UTC", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/paf?useTimezone=true&serverTimezone=UTC","root", "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return con;
 	}
-  
-	public String insertItem( String Ruser_name, String Ruser_address, String Ruser_gender,String Ruser_age,String Ruser_notes) {
+
+	public String addUserDetails(String Ruser_name, String Ruser_address, String Ruser_gender, String Ruser_age, String Ruser_notes) {
 		String output = "";
 		try {
 			Connection con = connect();
 			if (con == null) {
 				return "Error while connecting to the database for inserting.";
 			}
-			// create a prepared statement
+			// create a prepared statement  
 			String query = " insert into reg_user(`Ruser_ID`,`Ruser_name`,`Ruser_address`,`Ruser_gender`,`Ruser_age`,`Ruser_notes`)"
-					+ " values (?, ?, ?, ?, ?, ?)";
+					+ " values (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			// binding values
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setString(2, Ruser_name);
 			preparedStmt.setString(3, Ruser_address);
-			preparedStmt.setString(4, Ruser_gender);
+			preparedStmt.setString(4, (Ruser_gender));
 			preparedStmt.setString(5, Ruser_age);
 			preparedStmt.setString(6, Ruser_notes);
+		
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Inserted successfully";
+			//output = "Inserted successfully";
+			String newUsers = readUsers();
+			 output = "{\"status\":\"success\", \"data\": \"" +newUsers + "\"}";
+			
 		} catch (Exception e) {
-			output = "Error while inserting the item.";
+			//output = "Error while inserting the user.";
+			output = "{\"status\":\"error\", \"data\":\"Error while inserting the user.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
 	}
 
-	public String readItems() {
+	public String readUsers() {
 		String output = "";
 		try {
 			Connection con = connect();
 			if (con == null) {
 				return "Error while connecting to the database for reading.";
-			}   
+			}
 			// Prepare the html table to be displayed
-			output = "<table border=\"1\"><tr><th>Ruser_ID</th><th>Ruser_name</th><th>Ruser_address</th><th>Ruser_gender<th>Ruser_age</th><th>Ruser_notes</th></th><th>Update</th><th>Remove</th></tr>";
+			output = "<table border=\'1\'><tr><th>User Name</th><th>User Address</th><th>Gender</th><th>Age</th><th>User Notes</th></tr>";
 			String query = "select * from reg_user";
 			Statement stmt = (Statement) con.createStatement();
 			ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query);
@@ -67,34 +72,48 @@ public class User {
 				String Ruser_ID = Integer.toString(rs.getInt("Ruser_ID"));
 				String Ruser_name = rs.getString("Ruser_name");
 				String Ruser_address = rs.getString("Ruser_address");
-				String Ruser_gender = rs.getString("Ruser_gender");
-				String Ruser_age = Integer.toString(rs.getInt("Ruser_age"));
+				String Ruser_gender = rs.getString(rs.getInt("Ruser_gender"));
+				String Ruser_age = rs.getString("Ruser_age");
 				String Ruser_notes = rs.getString("Ruser_notes");
+		
 				// Add into the html table
-				output += "<tr><td>" + Ruser_ID + "</td>";
-				output += "<td>" + Ruser_name + "</td>";
+				output += "<tr><td><input id='hidRuser_IDUpdate' name='hidRuser_IDUpdate' type='hidden' value='" + Ruser_ID + "'>" + Ruser_name + "</td>";
+				
+				/*output += "<tr><td><input id=\"hidUserIDUpdate\"name=\"hidUserIDUpdate\"type=\"hidden\" value=\""
+						+ userID + "\">" + userName + "</td>";*/
+				
 				output += "<td>" + Ruser_address + "</td>";
 				output += "<td>" + Ruser_gender + "</td>";
 				output += "<td>" + Ruser_age + "</td>";
 				output += "<td>" + Ruser_notes + "</td>";
-				  
+			
 				// buttons
-				output += "<td><input name=\"btnUpdate\" type=\"button\"value=\"Update\" class=\"btn btn-secondary\"></td>"
-						+ "<td><form method=\"post\" action=\"items.jsp\">"
-						+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"
-						+ "<input name=\"itemID\" type=\"hidden\" value=\"" + Ruser_ID + "\">" + "</form></td></tr>";
+				output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td><td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-userid='"
+						 + Ruser_ID + "'>" + "</td></tr>";
+				
+				/*output += "<td><input name=\"btnUpdate\"type=\"button\" value=\"Update\"class=\" btnUpdate btn btn-secondary\"></td><td><form method=\"post\" action=\"User.jsp\"><input name=\"btnRemove\" type=\"submit\"value=\"Remove\" class=\"btn btn-danger\"><input name=\"hidUserIDDelete\" type=\"hidden\"value=\""
+						+ userID + "\">" + "</form></td></tr>";*/
+				
+				/*
+				 * output +=
+				 * "<td><input name=\"btnUpdate\" type=\"button\"value=\"Update\" class=\"btn btn-secondary\"></td>"
+				 * + "<td><form method=\"post\" action=\"items.jsp\">" +
+				 * "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"
+				 * + "<input name=\"userID\" type=\"hidden\" value=\"" + userID + "\">" +
+				 * "</form></td></tr>";
+				 */
 			}
 			con.close();
 			// Complete the html table
 			output += "</table>";
 		} catch (Exception e) {
-			output = "Error while reading the items.";
+			output = "Error while reading the users.";
 			System.err.println(e.getMessage());
 		}
 		return output;
 	}
 
-	public String updateItem( String Ruser_ID ,String Ruser_name, String Ruser_address, String Ruser_gender,String Ruser_age,String Ruser_notes) {
+	public String updateUserDetails(String Ruser_ID, String Ruser_name, String Ruser_address, String Ruser_gender, String Ruser_age, String Ruser_notes) {
 		String output = "";
 		try {
 			Connection con = connect();
@@ -102,27 +121,32 @@ public class User {
 				return "Error while connecting to the database for updating.";
 			}
 			// create a prepared statement
-			String query = "UPDATE reg_user SET Ruser_name=?,Ruser_address=?,Ruser_gender=?,Ruser_age=?,Ruser_notes=? WHERE Ruser_ID=?";
+			String query = "UPDATE reg_user SET Ruser_name=?,Ruser_address=?,Ruser_gender=?,Ruser_age=?,Ruser_notes=?WHERE Ruser_ID=?";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			// binding values
 			preparedStmt.setString(1, Ruser_name);
 			preparedStmt.setString(2, Ruser_address);
-			preparedStmt.setString(3, Ruser_gender);
+			preparedStmt.setString(3, (Ruser_gender));
 			preparedStmt.setString(4, Ruser_age);
 			preparedStmt.setString(5, Ruser_notes);
-			preparedStmt.setInt(6,Integer.parseInt( Ruser_ID));
+			preparedStmt.setInt(6, Integer.parseInt(Ruser_ID));
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Updated successfully";
+			//output = "Updated successfully";
+			
+			String newUsers = readUsers();
+			 output = "{\"status\":\"success\", \"data\": \"" +newUsers + "\"}";
+			
 		} catch (Exception e) {
-			output = "Error while updating the item.";
+			//output = "Error while updating the user.";
+			output = "{\"status\":\"error\", \"data\":\"Error while updating the user.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
 	}
 
-	public String deleteItem(String Ruser_ID) {
+	public String deleteUsers(String Ruser_ID) {
 		String output = "";
 		try {
 			Connection con = connect();
@@ -137,18 +161,19 @@ public class User {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Deleted successfully";
+			//output = "Deleted successfully";
+			String newUsers = readUsers();
+			 output = "{\"status\":\"success\", \"data\": \"" +newUsers + "\"}";
+			
 		} catch (Exception e) {
-			output = "Error while deleting the item.";
+			//output = "Error while deleting the user.";
+			output = "{\"status\":\"error\", \"data\":\"Error while deleting the user.\"}";
 			System.err.println(e.getMessage());
 		}
 		return output;
 	}
-	
-	
+
 }
-	
-	
 	
 	
 	

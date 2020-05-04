@@ -28,7 +28,7 @@ public class UserService {
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
 	public String readItems() {
-		return itemObj.readItems();
+		return itemObj.readUsers();
 		
 	}
 
@@ -44,7 +44,7 @@ public class UserService {
 			@FormParam("Ruser_notes") String Ruser_notes
 			) 
 	{
-		String output = itemObj.insertItem( Ruser_name, Ruser_address, Ruser_gender,Ruser_age,Ruser_notes);
+		String output = itemObj.addUserDetails( Ruser_name, Ruser_address, Ruser_gender,Ruser_age,Ruser_notes);
 		return output;
 	}
 	
@@ -63,7 +63,7 @@ public class UserService {
 		String Ruser_age = itemObject.get("Ruser_age").getAsString();
 		String Ruser_notes = itemObject.get("Ruser_notes").getAsString();
 
-		String output = itemObj.updateItem(Ruser_ID, Ruser_name, Ruser_address, Ruser_gender, Ruser_age,Ruser_notes);
+		String output = itemObj.updateUserDetails(Ruser_ID, Ruser_name, Ruser_address, Ruser_gender, Ruser_age,Ruser_notes);
 
 		return output;
 	}
@@ -80,7 +80,7 @@ public class UserService {
 		//Read the value from the element <itemID> 
 		String Ruser_ID = doc.select("Ruser_ID").text();
 
-		String output = itemObj.deleteItem(Ruser_ID);
+		String output = itemObj.deleteUsers(Ruser_ID);
 
 		return output;
 	}
