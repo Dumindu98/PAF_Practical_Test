@@ -59,7 +59,7 @@ function onUserSaveComplete(response, status) {
 		$.ajax({
 			url : "UsersAPI",
 			type : "DELETE",
-			data : "Ruser_ID=" + $(this).data("Ruser_ID"),
+			data : "Ruser_ID=" + $(this).data("userid"),
 			dataType : "text",
 			complete : function(response, status) {
 				onUserDeleteComplete(response.responseText, status);

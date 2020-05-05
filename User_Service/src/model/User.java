@@ -30,13 +30,13 @@ public class User {
 			}
 			// create a prepared statement  
 			String query = " insert into reg_user(`Ruser_ID`,`Ruser_name`,`Ruser_address`,`Ruser_gender`,`Ruser_age`,`Ruser_notes`)"
-					+ " values (?, ?, ?, ?, ?, ?, ?)";
+					+ " values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			// binding values
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setString(2, Ruser_name);
 			preparedStmt.setString(3, Ruser_address);
-			preparedStmt.setString(4, (Ruser_gender));
+			preparedStmt.setString(4, Ruser_gender);
 			preparedStmt.setString(5, Ruser_age);
 			preparedStmt.setString(6, Ruser_notes);
 		
@@ -72,7 +72,7 @@ public class User {
 				String Ruser_ID = Integer.toString(rs.getInt("Ruser_ID"));
 				String Ruser_name = rs.getString("Ruser_name");
 				String Ruser_address = rs.getString("Ruser_address");
-				String Ruser_gender = rs.getString(rs.getInt("Ruser_gender"));
+				String Ruser_gender = rs.getString("Ruser_gender");
 				String Ruser_age = rs.getString("Ruser_age");
 				String Ruser_notes = rs.getString("Ruser_notes");
 		
@@ -170,6 +170,7 @@ public class User {
 			output = "{\"status\":\"error\", \"data\":\"Error while deleting the user.\"}";
 			System.err.println(e.getMessage());
 		}
+		
 		return output;
 	}
 

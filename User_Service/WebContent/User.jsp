@@ -22,14 +22,14 @@
 
 
 	<form id="formUser" name="formUser" method="post" action="User.jsp">
-		UserName : <input id="Ruser_ID" name="username" type="text"
+		UserName : <input id="Ruser_name" name="Ruser_name" type="text"
 			class="form-control form-control-sm"> <br> User Address : <input
-			id="Ruser_address" name="useraddress" type="text"
+			id="Ruser_address" name="Ruser_address" type="text"
 			class="form-control form-control-sm"> <br> Gender : <input
-			id="Ruser_gender" name="usergender" type="text" class="form-control form-control-sm">
-		<br> Age : <input id="Ruser_age" name="age" type="text"
+			id="Ruser_gender" name="Ruser_gender" type="text" class="form-control form-control-sm">
+		<br> Age : <input id="Ruser_age" name="Ruser_age" type="text"
 			class="form-control form-control-sm"> <br> User Notes : <input
-			id="Ruser_notes" name="usernotes" type="text"
+			id="Ruser_notes" name="Ruser_notes" type="text"
 			class="form-control form-control-sm"> <br> <input
 			id="btnSave" name="btnSave" type="button" value="Save"
 			class="btn btn-primary"> <input type="hidden"
