@@ -63,7 +63,7 @@ public class User {
 				return "Error while connecting to the database for reading.";
 			}
 			// Prepare the html table to be displayed
-			output = "<table border=\'1\'><tr><th>User Name</th><th>User Address</th><th>Gender</th><th>Age</th><th>User Notes</th></tr>";
+			output = "<table border=\'1\'><tr><th>User Name</th><th>User Address</th><th>Gender</th><th>Age</th><th>User Notes</th><th>Update</th><th>Delete</th></tr>";
 			String query = "select * from reg_user";
 			Statement stmt = (Statement) con.createStatement();
 			ResultSet rs = ((java.sql.Statement) stmt).executeQuery(query);
