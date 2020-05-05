@@ -18,7 +18,7 @@ $(document).on("click", "#btnSave", function(event) {
 		$("#alertError").show();
 		return;
 	}
-	// If valid------------------------
+	// If valid----------------------------
 	var type = ($("#hidRuser_IDSave").val() == "") ? "POST" : "PUT";
 
 	$.ajax({
@@ -89,7 +89,7 @@ function onUserSaveComplete(response, status) {
 	}
 
 
-// UPDATE==========================================
+// UPDATE======================================================
 $(document).on(
 		"click",
 		".btnUpdate",
@@ -115,22 +115,12 @@ function validateItemForm() {
 		return "Insert Address.";
 	}
 	
-	// is numerical value
-	//var tmpPhone = $("#phoneNo").val().trim();
-	//if (!$.isNumeric(tmpPhone)) {
-		//return "Insert Only Numbers for Phone No.";
-	//}
 
 	// GENDER
 	if ($("#Ruser_gender").val().trim() == "") {
 		return "Insert Gender.";
 	}
 	
-	// is numerical value
-	//var tmpAge = $("#age").val().trim();
-	//if (!$.isNumeric(tmpAge)) {
-		//return "Insert a numerical value for Age.";
-	//}
 	
 	// AGE---------------------------
 	if ($("#Ruser_age").val().trim() == "") {
