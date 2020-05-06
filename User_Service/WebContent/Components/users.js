@@ -4,21 +4,21 @@ $(document).ready(function() {
 	}
 	$("#alertError").hide();
 });
-// SAVE ============================================
+// SAVE ==========================================================
 $(document).on("click", "#btnSave", function(event) {
 	// Clear alerts---------------------
 	$("#alertSuccess").text("");
 	$("#alertSuccess").hide();
 	$("#alertError").text("");
 	$("#alertError").hide();
-	// Form validation-------------------
+	// Form validation------------------------
 	var status = validateItemForm();
 	if (status != true) {
 		$("#alertError").text(status);
 		$("#alertError").show();
 		return;
 	}
-	// If valid----------------------------
+	// If valid-------------------------------
 	var type = ($("#hidRuser_IDSave").val() == "") ? "POST" : "PUT";
 
 	$.ajax({
@@ -54,7 +54,7 @@ function onUserSaveComplete(response, status) {
 	$("#formUser")[0].reset();
 }
 
-//DELETE=============================================================================
+//DELETE=========================================================
 	$(document).on("click", ".btnRemove", function(event) {
 		$.ajax({
 			url : "UsersAPI",
@@ -89,7 +89,7 @@ function onUserSaveComplete(response, status) {
 	}
 
 
-// UPDATE======================================================
+// UPDATE=========================================================================
 $(document).on(
 		"click",
 		".btnUpdate",
