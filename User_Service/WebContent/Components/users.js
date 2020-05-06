@@ -110,13 +110,13 @@ function validateItemForm() {
 		return "Insert Username.";
 	}
 	
-	// ADDRESS
+	// ADDRESS-----------------------------------
 	if ($("#Ruser_address").val().trim() == "") {
 		return "Insert Address.";
 	}
 	
 
-	// GENDER
+	// GENDER---------------------------------
 	if ($("#Ruser_gender").val().trim() == "") {
 		return "Insert Gender.";
 	}
