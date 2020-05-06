@@ -79,8 +79,6 @@ public class User {
 				// Add into the html table
 				output += "<tr><td><input id='hidRuser_IDUpdate' name='hidRuser_IDUpdate' type='hidden' value='" + Ruser_ID + "'>" + Ruser_name + "</td>";
 				
-				/*output += "<tr><td><input id=\"hidUserIDUpdate\"name=\"hidUserIDUpdate\"type=\"hidden\" value=\""
-						+ userID + "\">" + userName + "</td>";*/
 				
 				output += "<td>" + Ruser_address + "</td>";
 				output += "<td>" + Ruser_gender + "</td>";
@@ -91,17 +89,7 @@ public class User {
 				output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td><td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-userid='"
 						 + Ruser_ID + "'>" + "</td></tr>";
 				
-				/*output += "<td><input name=\"btnUpdate\"type=\"button\" value=\"Update\"class=\" btnUpdate btn btn-secondary\"></td><td><form method=\"post\" action=\"User.jsp\"><input name=\"btnRemove\" type=\"submit\"value=\"Remove\" class=\"btn btn-danger\"><input name=\"hidUserIDDelete\" type=\"hidden\"value=\""
-						+ userID + "\">" + "</form></td></tr>";*/
 				
-				/*
-				 * output +=
-				 * "<td><input name=\"btnUpdate\" type=\"button\"value=\"Update\" class=\"btn btn-secondary\"></td>"
-				 * + "<td><form method=\"post\" action=\"items.jsp\">" +
-				 * "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"
-				 * + "<input name=\"userID\" type=\"hidden\" value=\"" + userID + "\">" +
-				 * "</form></td></tr>";
-				 */
 			}
 			con.close();
 			// Complete the html table
